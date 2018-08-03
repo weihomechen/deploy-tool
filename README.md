@@ -37,7 +37,8 @@ node ./bin/deploy.js -n name -t target -b branch -w web -d dir -u user -p pwd -e
 
 ### 约定
 
-#### 前端
+#### 前端
+
 打包命令:  `npm run build`
 打包文件夹名称: `build`
 
