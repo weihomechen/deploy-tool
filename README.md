@@ -31,17 +31,23 @@
 # 部署node项目
 node ./bin/deploy.js -n name -t target -b branch -w web -d dir -u user -p pwd -e type
 
+# 示例
+node ./bin/deploy.js -n blog-node -t /Users/weihome/my-projects/blog-node -b master -w 118.18.18.118 -d /var/proj/ -u root -p 123456 -e node
+
 # 部署前端项目
 node ./bin/deploy.js -n name -t target -b branch -w web -d dir -u user -p pwd -e type
+
+# 示例
+node ./bin/deploy.js -n blog -t /Users/weihome/my-projects/blog -b master -w 118.18.18.118 -d /var/proj/ -u root -p 123456 -e static
 ```
 
 ### 约定
 
 #### 前端
 
-打包命令:  `npm run build`
-打包文件夹名称: `build`
+- 打包命令:  `npm run build`
+- 打包文件夹名称: `build`
 
 #### 服务端
-服务启动命令 `npm run prod`  
-服务停止命令 `npm run stop`  
+- 服务启动命令 `npm run prod`  
+- 服务停止命令 `npm run stop`  
