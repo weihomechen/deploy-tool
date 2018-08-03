@@ -6,7 +6,7 @@
 
 完整参数： 
 
-```
+```sh
 # 必须
 -n, --name <name>, 项目名称
 -t, --target <target>, 项目路径
