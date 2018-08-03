@@ -39,12 +39,12 @@ const tmpdir = uniqueDirname(os.tmpdir(), 'deploy-');
 const {
   name,
   target,
-  branch,
+  branch = 'master',
   web,
   dir,
-  user,
+  user = 'root',
   password,
-  type,
+  type = 'static',
 } = program;
 
 const {

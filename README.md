@@ -10,12 +10,12 @@
 # 必须
 -n, --name <name>, 项目名称
 -t, --target <target>, 项目路径
--b, --branch <branch>, git分支
+-b, --branch <branch>, git分支，默认`master`
 -w, --web <web>, web服务器
 -d, --dir <dir>, 部署到web服务器的目录
--u, --user <user>, web服务器用户名
+-u, --user <user>, web服务器用户名，默认`root`
 -p, --password <pwd>, web服务器密码
--e, --type <type>, 项目类型，static -- 前端项目 node -- Node项目
+-e, --type <type>, 项目类型，static -- 前端项目 node -- Node项目，默认`static`
 
 # 可选
 -o, --oss [oss], 是否将静态资源上传到oss
@@ -38,7 +38,7 @@ node ./bin/deploy.js -n blog-node -t /Users/weihome/my-projects/blog-node -b mas
 node ./bin/deploy.js -n name -t target -b branch -w web -d dir -u user -p pwd -e type
 
 # 示例
-node ./bin/deploy.js -n blog -t /Users/weihome/my-projects/blog -b master -w 118.18.18.118 -d /var/proj/ -u root -p 123456 -e static
+node ./bin/deploy.js -n blog -t /Users/weihome/my-projects/blog  -w 118.18.18.118 -d /var/proj/ -p 123456
 ```
 
 ### 约定
