@@ -38,7 +38,7 @@
 ```js
 // 默认配置 default config
 exports.defaultConfig = {
-  web: '118.25.16.129', // web server
+  web: '118.118.118.118', // web server
   dir: '/var/proj/',    // web server target dir
   branch: 'master',     // git branch
   build: 'build',       // build script define by package.json 
@@ -77,13 +77,13 @@ node ./bin/deploy.js -w 88.88.88.88
 
 ```sh
 # 部署前端项目
-node ./bin/deploy.js -n name -t target -b branch -w web -d dir -u user -p pwd -e type
+node ./bin/deploy.js -n name -p pwd 
 
 # 示例
 node ./bin/deploy.js -n blog -p 123456
 
 # 部署node项目
-node ./bin/deploy.js -n name -t target -b branch -w web -d dir -u user -p pwd -e type
+node ./bin/deploy.js -n name -p pwd
 
 # 示例
 node ./bin/deploy.js -n blog-node -p 123456
