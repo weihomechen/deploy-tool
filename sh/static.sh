@@ -6,6 +6,7 @@ set server [lindex $argv 1]
 set wd [lindex $argv 2]
 set user [lindex $argv 3]
 set pwd [lindex $argv 4]
+set dist [lindex $argv 5]
 
 spawn ssh $user@$server
 
@@ -19,6 +20,6 @@ send "cd $wd\r"
 send "rm -rf $name\r"
 send "tar xzvf $name.tar.gz\r"
 send "rm -rf $name.tar.gz\r"
-send "mv build $name\r"
+send "mv $dist $name\r"
 send "exit\r"
 expect eof

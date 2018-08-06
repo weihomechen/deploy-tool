@@ -7,7 +7,8 @@
 # $6 user       服务器用户
 # $7 password   服务器密码
 # $8 type       项目类型
-
+# $9 build      打包命令
+# ${10} dist    打包后的文件夹
 
 cd $2
 
@@ -19,15 +20,18 @@ dname=$(dirname "$0")
 
 if [ $8 == 'static' ]
 then
-  export NODE_ENV=production && npm run build
+  export NODE_ENV=production && npm run $9
   rm -rf $1.tar.gz
-  tar -czf $1.tar.gz build
+  tar -czf $1.tar.gz ${10}
   expect $dname/upload.sh $1 $4 $5 $6 $7
-  expect $dname/static.sh $1 $4 $5 $6 $7
+  rm -rf $1.tar.gz
+  expect $dname/static.sh $1 $4 $5 $6 $7 ${10}
 elif [ $8 == 'node' ]
 then
   cd ../
+  rm -rf $1.tar.gz
   tar -czf $1.tar.gz $1
   expect $dname/upload.sh $1 $4 $5 $6 $7
+  rm -rf $1.tar.gz
   expect $dname/execute.sh $1 $4 $5 $6 $7
 fi
