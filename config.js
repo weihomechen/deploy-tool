@@ -25,25 +25,25 @@
 // 默认配置default config
 exports.defaultConfig = {
   web: '118.118.118.118', // web server
-  dir: '/var/proj/',    // web server target dir
-  branch: 'master',     // git branch
-  build: 'build',       // build script define by package.json 
-  dist: 'build',        // builded filename
-  user: 'root',         // web server ssh user
-  type: 'static',       // deploy type
+  dir: '/var/proj/',      // web server target dir
+  branch: 'master',       // git branch
+  build: 'build',         // build script define by package.json 
+  dist: 'build',          // builded filename
+  user: 'root',           // web server ssh user
+  type: 'static',         // deploy type
 };
 
 // 具体项目的配置 proj config
 exports.projConfigMap = {
   blog: {
-    target: '/Users/weihome/my-projects/blog',
+    target: '/Users/ifun/my-projects/blog',
   },
   'blog-node': {
-    target: '/Users/weihome/my-projects/blog-node',
+    target: '/Users/ifun/my-projects/blog-node',
     type: 'node',
   },
   'vue-mail': {
-    target: '/Users/weihome/my-projects/vue-mail-front',
+    target: '/Users/ifun/my-projects/vue-mail-front',
     build: 'build:prod',
     dist: 'dist',
   }
