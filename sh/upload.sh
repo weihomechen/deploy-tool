@@ -5,7 +5,7 @@ set server [lindex $argv 1]
 set wd [lindex $argv 2]
 set user [lindex $argv 3]
 set pwd [lindex $argv 4]
-spawn scp -r $name.tar.gz $user@$server:$wd
+spawn scp $name.tar.gz $user@$server:$wd
 expect {
 "(yes/no)?"
   {

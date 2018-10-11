@@ -24,7 +24,7 @@
 
 // 默认配置default config
 exports.defaultConfig = {
-  web: '118.118.118.118', // web server
+  web: '118.25.16.129',   // web server
   dir: '/var/proj/',      // web server target dir
   branch: 'master',       // git branch
   build: 'build',         // build script define by package.json 
@@ -46,7 +46,11 @@ exports.projConfigMap = {
     target: '/Users/ifun/my-projects/vue-mail-front',
     build: 'build:prod',
     dist: 'dist',
-  }
+  },
+  'antd-admin': {
+    target: '/Users/ifun/my-projects/antd-admin',
+    dist: 'dist',
+  },
 }
 
 exports.config = () => {

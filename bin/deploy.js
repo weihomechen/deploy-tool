@@ -41,7 +41,6 @@ program
   .parse(process.argv);
 
 const tmpdir = uniqueDirname(os.tmpdir(), 'deploy-');
-console.log('projConfigMap', projConfigMap);
 
 const { name, password } = program;
 const projConfig = projConfigMap[name];
