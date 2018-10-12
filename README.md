@@ -54,9 +54,9 @@ deploy -n blog-node -p 123456
 
 ## 自定义默认配置
 
-### 通过修改config.js实现自定义(只需改一次)
+全局和具体项目的默认配置位于 `config.json` 文件中
 
-全局和具体项目的默认配置位于 `config.js` 文件中
+### 直接修改config.json实现自定义
 
 - 查找全局安装的npm包：
 
@@ -66,50 +66,81 @@ npm list -g --depth 0
 
 ![](https://rulifun.oss-cn-hangzhou.aliyuncs.com/static/image/WX20181011-135003%402x.png)
 
-- 修改`config.js` 文件即可: 
+- 修改`config.json` 文件即可: 
 
 ```
-vim /usr/local/lib/node_modules/@ifun/deploy/config.js
+vim /usr/local/lib/node_modules/@ifun/deploy/config.json
 ```
 
 #### 配置文件说明
 
-```js
-// 默认配置 default config
-exports.defaultConfig = {
-  web: '118.25.16.129', // web server
-  dir: '/var/proj/',    // web server target dir
-  branch: 'master',     // git branch
-  build: 'build',       // build script define by package.json 
-  dist: 'build',        // builded filename
-  user: 'root',         // web server ssh user
-  type: 'static',       // deploy type
-};
-
-// 具体项目的配置 proj config
-exports.projConfigMap = {
-  blog: {
-    target: '/Users/weihome/my-projects/blog',
+```json
+{
+  "defaultConfig": {              // 默认配置 default config
+    "web": "118.25.16.129",       // web server
+    "dir": "/var/proj/",          // web server target dir
+    "branch": "master",           // git branch
+    "build": "build",             // build script define by package.json 
+    "dist": "build",              // builded filename
+    "user": "root",               // web server ssh user
+    "type": "static"              // deploy type 静态项目 - static node项目 - node
   },
-  'blog-node': {
-    target: '/Users/weihome/my-projects/blog-node',
-    type: 'node',
-  },
-  'vue-mail': {
-    target: '/Users/weihome/my-projects/vue-mail-front',
-    build: 'build:prod',
-    dist: 'dist',
+  "projConfigMap": {              // 具体项目的配置 proj config
+    "blog": {                     // 项目名
+      "target": "/Users/ifun/my-projects/blog" // 项目在本地的路径
+    },
+    "blog-node": {
+      "target": "/Users/ifun/my-projects/blog-node",
+      "type": "node"
+    },
+    "vue-mail": {
+      "target": "/Users/ifun/my-projects/vue-mail-front",
+      "build": "build:prod",
+      "dist": "dist"
+    },
+    "react-admin": {
+      "target": "/Users/ifun/my-projects/antd-admin",
+      "dist": "dist"
+    }
   }
 }
 ```
 
 ### 命令行
 
-通过命令行输入的参数具有最高权级，会覆盖全局和项目的默认配置
+#### 通过命令修改
+
+```sh
+# @param target 全局配置-g 项目配置-项目名(e.g:blog) 默认:g
+deploy-set -t [target] -k <key> -v <value>
+
+# 修改全局的user配置项
+deploy-set -k user -v yourname
+
+# 修改项目配置项
+deploy-set -t blog -k type -v node
+
+# @param all 是否获取所有配置 true-是 false-否 默认：false
+deploy-get -a [all] -t [target] -k [key]
+
+# 获取所有配置项
+deploy-get -a true
+
+# 获取全局的web配置项
+deploy-get -k web
+
+# 获取项目blog的type配置项
+deploy-get -t blog -k type
 
 ```
+
+#### 临时修改
+
+临时输入的参数具有最高权级，会覆盖全局和项目的默认配置，仅生效一次
+
+```sh
 # 通过命令行传递的`web`的参数最终会被使用
-node ./bin/deploy.js -w 88.88.88.88 
+deploy -n blog-node -p 123456 -w 88.88.88.88 
 ```
 
 ## 约定

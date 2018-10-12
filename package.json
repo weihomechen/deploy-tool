@@ -1,14 +1,18 @@
 {
   "name": "@ifun/deploy",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "auth": "weihome",
   "description": "项目部署命令行工具",
   "main": "./bin/deploy.js",
   "bin": {
-    "deploy": "./bin/deploy.js"
+    "deploy": "./bin/deploy.js",
+    "deploy-set": "./bin/set.js",
+    "deploy-get": "./bin/get.js"
   },
   "scripts": {
     "deploy": "node ./bin/deploy.js",
+    "deploy-set": "node ./bin/set.js",
+    "deploy-get": "node ./bin/get.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

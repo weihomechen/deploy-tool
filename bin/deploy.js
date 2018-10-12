@@ -13,10 +13,17 @@ const {
   uniqueDirname,
 } = require('../lib/util');
 const upload = require('../lib/upload');
+// const {
+//   defaultConfig,
+//   projConfigMap,
+// } = require('../config');
+
+const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf8');
+
 const {
   defaultConfig,
-  projConfigMap,
-} = require('../config');
+  projConfigMap
+} = JSON.parse(data);
 
 program
   .usage('-n <name> -p <pwd> ')

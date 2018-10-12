@@ -1,0 +1,29 @@
+{
+  "defaultConfig": {
+    "web": "118.25.16.129",
+    "dir": "/var/proj/",
+    "branch": "master",
+    "build": "build",
+    "dist": "build",
+    "user": "root",
+    "type": "static"
+  },
+  "projConfigMap": {
+    "blog": {
+      "target": "/Users/ifun/my-projects/blog"
+    },
+    "blog-node": {
+      "target": "/Users/ifun/my-projects/blog-node",
+      "type": "node"
+    },
+    "vue-mail": {
+      "target": "/Users/ifun/my-projects/vue-mail-front",
+      "build": "build:prod",
+      "dist": "dist"
+    },
+    "react-admin": {
+      "target": "/Users/ifun/my-projects/antd-admin",
+      "dist": "dist"
+    }
+  }
+}
