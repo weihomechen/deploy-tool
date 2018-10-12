@@ -144,7 +144,7 @@ deploy -n blog-node -p 123456 -w 88.88.88.88
 
 ## Agreement
 
-The following conventions are the default settings for this project. If you need to change, please modify the configuration file `config.js`.
+The following conventions are the default settings for this project. If you need to change, please modify the configuration file `config.json`.
 
 ### front-end
 - production env packaging command: `build`

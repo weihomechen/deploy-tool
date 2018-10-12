@@ -23,7 +23,7 @@ deploy -n blog -p 123456
 deploy -n <name> -p <pwd>
 
 # 示例
-deploy -n blog-node -p 123456 -t node
+deploy -n blog-node -p 123456 -e node
 
 ```
 
@@ -147,7 +147,7 @@ deploy -n blog-node -p 123456 -w 88.88.88.88
 
 ## 约定
 
-以下约定是本项目的默认设置，如需更改，请修改配置文件`config.js`
+以下约定是本项目的默认设置，如需更改，请修改配置文件`config.json`
 
 ### 前端
 - 项目生产环境打包命令 `build`
