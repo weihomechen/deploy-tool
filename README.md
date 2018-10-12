@@ -2,6 +2,8 @@
 
 部署应用工具，目前支持部署本地项目到服务器
 
+[English Document](https://github.com/weihomechen/deploy-tool/blob/master/README-en.md)
+
 ## 安装
 
 ```sh
