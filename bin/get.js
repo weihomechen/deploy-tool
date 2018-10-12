@@ -28,8 +28,6 @@ program
 
 const { target = 'g', key, all = 'false' } = program;
 
-console.log(program);
-
 if (!key && all === 'false') {
   program.help();
 }
