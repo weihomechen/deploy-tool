@@ -152,4 +152,4 @@ The following conventions are the default settings for this project. If you need
 
 ### server-end(node)
 - service start: `npm run prod`  
-- Service stop: `npm run stop`
+- service stop: `npm run stop`

@@ -23,7 +23,7 @@ deploy -n blog -p 123456
 deploy -n <name> -p <pwd>
 
 # 示例
-deploy -n blog-node -p 123456
+deploy -n blog-node -p 123456 -t node
 
 ```
 
@@ -76,7 +76,7 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
 
 #### 配置文件说明
 
-```json
+```js
 {
   "defaultConfig": {              // 默认配置 default config
     "web": "118.25.16.129",       // web server
