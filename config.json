@@ -22,8 +22,12 @@
       "dist": "dist"
     },
     "react-admin": {
-      "target": "/Users/ifun/my-projects/antd-admin",
+      "target": "/Users/ifun/my-projects/react-admin",
       "dist": "dist"
+    },
+    "react-admin-node": {
+      "target": "/Users/ifun/my-projects/react-admin-node",
+      "type": "node"
     }
   }
 }

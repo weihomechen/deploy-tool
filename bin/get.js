@@ -33,7 +33,7 @@ if (!key && all === 'false') {
 }
 
 if (all === 'true') {
-  console.log(res);
+  console.log(data);
   process.exit(0);
 }
 
