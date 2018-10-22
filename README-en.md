@@ -153,3 +153,13 @@ The following conventions are the default settings for this project. If you need
 ### server-end(node)
 - service start: `npm run prod`  
 - service stop: `npm run stop`
+
+## Practices
+
+The following projects are deployed through this tool, and the online preview address is on the github page:
+
+- [blog](https://github.com/weihomechen/blog)
+- [blog-node](https://github.com/weihomechen/blog-node)
+- [react-admin](https://github.com/weihomechen/react-admin)
+- [react-admin-node](https://github.com/weihomechen/react-admin-node)
+- [vue-mail](https://github.com/weihomechen/vue-mail-front)

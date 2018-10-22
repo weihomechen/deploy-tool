@@ -156,3 +156,13 @@ deploy -n blog-node -p 123456 -w 88.88.88.88
 ### 服务端
 - 服务启动命令 `npm run prod`  
 - 服务停止命令 `npm run stop`
+
+## 实践
+
+以下项目均通过本工具实现部署，线上预览地址在项目的github page：
+
+- [blog](https://github.com/weihomechen/blog)
+- [blog-node](https://github.com/weihomechen/blog-node)
+- [react-admin](https://github.com/weihomechen/react-admin)
+- [react-admin-node](https://github.com/weihomechen/react-admin-node)
+- [vue-mail](https://github.com/weihomechen/vue-mail-front)
