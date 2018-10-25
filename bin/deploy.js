@@ -13,10 +13,6 @@ const {
   uniqueDirname,
 } = require('../lib/util');
 const upload = require('../lib/upload');
-// const {
-//   defaultConfig,
-//   projConfigMap,
-// } = require('../config');
 
 const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf8');
 
@@ -29,7 +25,7 @@ program
   .usage('-n <name> -p <pwd> ')
   .version(require('../package.json').version)
   .option('-n, --name <name>', '项目名称')
-  .option('-p, --password <pwd>', 'web服务器密码')
+  // .option('-p, --password <pwd>', 'web服务器密码')
   .option('-t, --target [target]', '项目路径')
   .option('-b, --branch [branch]', 'git分支')
   .option('-w, --web [web]', 'web服务器')
@@ -49,9 +45,9 @@ program
 
 const tmpdir = uniqueDirname(os.tmpdir(), 'deploy-');
 
-const { name, password } = program;
+const { name } = program;
 const projConfig = projConfigMap[name];
-if (!name || !projConfig || !password) {
+if (!name || !projConfig) {
   program.help();
 }
 
@@ -86,29 +82,27 @@ if (oss && !(accessKeyId && accessKeySecret && bucket && region && assets && pub
   program.help();
 }
 
-console.log(`tmpdir: %s`, tmpdir);
-
 mkdirp.sync(tmpdir);
 
 const deploy = spawn('bash', [
-  path.join(__dirname, '../sh/deploy.sh'),
+  path.join(__dirname, '../sh/getPwd.sh'),
   name,
   target,
   branch,
   web,
   dir,
   user,
-  password,
+  'pwd',
   type,
   build,
   dist,
-]);
+], { stdio: 'inherit', shell: true });
 
-deploy.stdout.on('data', (data) => {
+deploy.on('data', (data) => {
   console.log(`stdout: ${data}`);
 });
 
-deploy.stderr.on('data', (data) => {
+deploy.on('error', (data) => {
   console.log(`stderr: ${data}`);
 });
 

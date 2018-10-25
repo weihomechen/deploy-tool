@@ -12,11 +12,13 @@ npm i @ifun/deploy -g
 
 ```sh
 # deploy project
-deploy -n <name> -p <pwd> 
+deploy -n <name>
 
 # e.g
-deploy -n blog -p 123456
+deploy -n blog
 ```
+
+Prompt for ssh login password and press Enter to confirm
 
 ## Parameter Description
 

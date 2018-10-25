@@ -13,19 +13,14 @@ npm i @ifun/deploy -g
 ## 使用
 
 ```sh
-# 部署前端项目
-deploy -n <name> -p <pwd> 
+# 部署项目
+deploy -n <name>
 
 # 示例
-deploy -n blog -p 123456
-
-# 部署node项目
-deploy -n <name> -p <pwd>
-
-# 示例
-deploy -n blog-node -p 123456 -e node
-
+deploy -n blog
 ```
+
+提示输入ssh登录密码，按回车确认
 
 ## 参数说明
 
@@ -34,7 +29,6 @@ deploy -n blog-node -p 123456 -e node
 ```sh
 # 必须
 -n, --name <name>, 项目名称
--p, --password <pwd>, web服务器密码
 
 # 可选
 -t, --target [target], 项目的本地路径
