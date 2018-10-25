@@ -136,7 +136,7 @@ deploy-get -t blog -k type
 
 ```sh
 # 通过命令行传递的`web`的参数最终会被使用
-deploy -n blog-node -p 123456 -w 88.88.88.88 
+deploy -n blog-node -w 88.88.88.88 
 ```
 
 ## 约定

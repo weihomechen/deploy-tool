@@ -27,7 +27,6 @@ All parameters：
 ```sh
 # required
 -n, --name <name>, project name
--p, --password <pwd>, web server password
 
 # optional
 -t, --target [target], project local path
@@ -141,7 +140,7 @@ Temporarily entered parameters have the highest privilege and override the defau
 
 ```sh
 # The `web` parameter passed through the command line will eventually be used.
-deploy -n blog-node -p 123456 -w 88.88.88.88 
+deploy -n blog-node -w 88.88.88.88 
 ```
 
 ## Agreement
