@@ -22,7 +22,7 @@ const {
 } = JSON.parse(data);
 
 program
-  .usage('-n <name> -p <pwd> ')
+  .usage('-n <name> ')
   .version(require('../package.json').version)
   .option('-n, --name <name>', '项目名称')
   // .option('-p, --password <pwd>', 'web服务器密码')
