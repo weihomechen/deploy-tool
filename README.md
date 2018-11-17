@@ -160,3 +160,4 @@ deploy -n blog-node -w 88.88.88.88
 - [react-admin](https://github.com/weihomechen/react-admin)
 - [react-admin-node](https://github.com/weihomechen/react-admin-node)
 - [vue-mail](https://github.com/weihomechen/vue-mail-front)
+- [vue-blog](https://github.com/weihomechen/vue-blog)
