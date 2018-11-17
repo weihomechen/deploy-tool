@@ -28,6 +28,11 @@
     "react-admin-node": {
       "target": "/Users/ifun/my-projects/react-admin-node",
       "type": "node"
+    },
+    "vue-blog": {
+      "target": "/Users/ifun/my-projects/vue-blog",
+      "build": "build",
+      "dist": "dist"
     }
   }
 }
