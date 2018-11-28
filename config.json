@@ -33,6 +33,12 @@
       "target": "/Users/ifun/my-projects/vue-blog",
       "build": "build",
       "dist": "dist"
+    },
+    "iycb": {
+      "publicDir": "/Users/ifun/microants-projects/iyicaibao/build",
+      "bucket": "public-read-bkt-oss",
+      "region": "oss-cn-hangzhou",
+      "assets": "/app/h5/iyicaibao/client"
     }
   }
 }
