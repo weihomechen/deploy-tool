@@ -1,6 +1,6 @@
 ## 说明
 
-部署应用工具，目前支持部署本地项目到服务器
+部署应用工具，目前支持部署远程仓库或本地项目到服务器
 
 [English Document](https://github.com/weihomechen/deploy-tool/blob/master/README-en.md)
 
@@ -21,6 +21,15 @@ deploy -n blog
 ```
 
 提示输入ssh登录密码，按回车确认
+
+## 上传静态资源到OSS
+
+目前支持从本地或仓库上传静态资源到OSS。
+
+```sh
+# 示例
+deploy-oss -n <name> -i <accessKeyId> -s <accessKeySecret>
+```
 
 ## 参数说明
 
@@ -100,6 +109,22 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
     }
   }
 }
+```
+
+上传到OSS需要配置必要的信息或在使用时传入：
+
+```json
+ "projrctName": {
+      "isRepertory": true,                    // 是否为远程仓库，默认false
+      "isBuilded": true,                      // 是否已打包，默认false
+      "target": "项目地址",                    // 项目地址，必须
+      "branch": "master",                     // 默认master
+      "publicDir": "build",                   // 要上传的文件目录, 必须
+      "bucket": "public-read-bkt-oss",        // OSS存储的bucket，必须
+      "region": "oss-cn-hangzhou",            // 必须
+      "assets": "/app/h5/iyicaibao/client",   // 指定OSS上存储路径，必须
+      "build": "build"                        // 打包命令，如果isBuilded为false，则必须，会知悉 npm run <build>
+    },
 ```
 
 ### 命令行
