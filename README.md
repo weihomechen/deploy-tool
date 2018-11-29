@@ -24,7 +24,7 @@ deploy -n blog
 
 ## 上传静态资源到OSS
 
-目前支持从本地或仓库上传静态资源到OSS。
+目前支持从本地或仓库上传静态资源到OSS，如果是本地项目，则直接上传到oss服务器指定目录。如果是远程仓库，会先git clone到本地，如果需要打包，则执行传入的打包命令，然后再上传。
 
 ```sh
 # 示例
@@ -96,7 +96,7 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
     },
     // 上传到OSS需要配置必要的信息或在使用时传入
     "projrctName": {
-      "isRepertory": true,                    // 是否为远程仓库，默认false
+      "": true,                    // 是否为远程仓库，默认false
       "isBuilded": true,                      // 是否已打包，默认false
       "target": "project/path",               // 项目地址，必须
       "branch": "master",                     // 默认master
