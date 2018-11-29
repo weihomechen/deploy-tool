@@ -42,7 +42,8 @@
       "publicDir": "build",
       "bucket": "public-read-bkt-oss",
       "region": "oss-cn-hangzhou",
-      "assets": "/app/h5/iyicaibao/client"
+      "assets": "/app/h5/iyicaibao/client",
+      "build": "build"
     },
     "iycb-dev": {
       "isRepertory": true,
@@ -52,7 +53,8 @@
       "publicDir": "build",
       "bucket": "public-read-bkt-oss",
       "region": "oss-cn-hangzhou",
-      "assets": "/app/h5/iyicaibao/client/dev"
+      "assets": "/app/h5/iyicaibao/client/dev",
+      "build": "build"
     },
     "iycb-stable": {
       "isRepertory": true,
@@ -62,7 +64,8 @@
       "publicDir": "build",
       "bucket": "public-read-bkt-oss",
       "region": "oss-cn-hangzhou",
-      "assets": "/app/h5/iyicaibao/client/stable"
+      "assets": "/app/h5/iyicaibao/client/stable",
+      "build": "build"
     }
   }
 }

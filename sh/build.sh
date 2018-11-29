@@ -15,9 +15,4 @@ git fetch origin $4
 
 git checkout $4
 
-cnpm install --production
-
-if [ $5 !== 'undefined' ]
-then
-  npm run $5
-fi
+cnpm install --production && npm run $5

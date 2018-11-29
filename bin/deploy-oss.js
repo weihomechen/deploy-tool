@@ -50,7 +50,7 @@ const config = {
 const {
   isRepertory,
   target,
-  branch,
+  branch = 'master',
   publicDir,
   accessKeyId,
   accessKeySecret,
@@ -60,7 +60,7 @@ const {
   build,
 } = config;
 
-if (!(accessKeyId && accessKeySecret && bucket && region && assets && publicDir)) {
+if (!(target && build && accessKeyId && accessKeySecret && bucket && region && assets && publicDir)) {
   console.log('使用oss需传入accessKeyId、accessKeySecret等参数');
 
   program.help();
