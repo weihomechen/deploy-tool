@@ -36,6 +36,7 @@
     },
     "iycb": {
       "isRepertory": true,
+      "isBuilded": true,
       "target": "git@192.168.10.190:node/iyicaibao.git",
       "branch": "master",
       "oss": true,
@@ -47,6 +48,7 @@
     },
     "iycb-dev": {
       "isRepertory": true,
+      "isBuilded": true,
       "target": "git@192.168.10.190:node/iyicaibao.git",
       "branch": "dev",
       "oss": true,
@@ -58,6 +60,7 @@
     },
     "iycb-stable": {
       "isRepertory": true,
+      "isBuilded": true,
       "target": "git@192.168.10.190:node/iyicaibao.git",
       "branch": "stable",
       "oss": true,

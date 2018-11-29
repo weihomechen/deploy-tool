@@ -49,6 +49,7 @@ const config = {
 
 const {
   isRepertory,
+  isBuilded,
   target,
   branch = 'master',
   publicDir,
@@ -84,32 +85,31 @@ const uploadProcess = (assetsDir) => {
   });
 }
 
-let buildProcess;
+let handleRepertory;
 
 if (isRepertory) {
-  buildProcess = spawn('bash', [
-    path.join(__dirname, '../sh/build.sh'),
+  handleRepertory = spawn('bash', [
+    path.join(__dirname, `../sh/${isBuilded ? 'clone' : 'build'}.sh`),
     tmpdir,
     name,
     target,
     branch,
-    build,
   ], { stdio: 'inherit', shell: true });
 
-  buildProcess.on('data', (data) => {
+  handleRepertory.on('data', (data) => {
     console.log(`stdout: ${data}`);
   });
 
-  buildProcess.on('error', (data) => {
+  handleRepertory.on('error', (data) => {
     console.log(`stderr: ${data}`);
   });
 
-  buildProcess.on('close', (code) => {
+  handleRepertory.on('close', (code) => {
     if (code === 0) {
       const assetsDir = `${tmpdir}/${name}/${publicDir}`
       uploadProcess(assetsDir);
     } else {
-      console.log('something wrong in buildProcess, code:', code);
+      console.log('something wrong in handleRepertory, code:', code);
       fs.removeSync(tmpdir);
     }
   });
