@@ -25,7 +25,6 @@ program
   .usage('-n <name> ')
   .version(require('../package.json').version)
   .option('-n, --name <name>', '项目名称')
-  // .option('-p, --password <pwd>', 'web服务器密码')
   .option('-t, --target [target]', '项目路径')
   .option('-b, --branch [branch]', 'git分支')
   .option('-w, --web [web]', 'web服务器')
@@ -58,6 +57,7 @@ const config = {
 };
 
 const {
+  isRepertory = false,
   target,
   branch,
   web,
@@ -75,6 +75,12 @@ const {
   assets,
   publicDir,
 } = config;
+
+if (!(target && branch && web && dir && user && type && build && dist)) {
+  console.log('请输入必要的信息或修改配置文件或使用“deploy-set”设置');
+
+  program.help();
+}
 
 if (oss && !(accessKeyId && accessKeySecret && bucket && region && assets && publicDir)) {
   console.log('使用oss需传入accessKeyId、accessKeySecret等参数');

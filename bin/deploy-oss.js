@@ -6,8 +6,8 @@ const {
 const fs = require('fs-extra');
 const path = require('path');
 const program = require('commander');
-// const mkdirp = require('mkdirp');
-// const os = require('os');
+const mkdirp = require('mkdirp');
+const os = require('os');
 
 const {
   uniqueDirname,
@@ -15,9 +15,8 @@ const {
 const upload = require('../lib/upload');
 
 const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf8');
-
-// const tmpdir = uniqueDirname(os.tmpdir(), 'deploy-');
-// mkdirp.sync(tmpdir);
+const tmpdir = uniqueDirname(os.tmpdir(), 'deploy-');
+mkdirp.sync(tmpdir);
 
 const {
   defaultConfig,
@@ -49,12 +48,16 @@ const config = {
 };
 
 const {
+  isRepertory,
+  target,
+  branch,
   publicDir,
   accessKeyId,
   accessKeySecret,
   bucket,
   region,
   assets,
+  build,
 } = config;
 
 if (!(accessKeyId && accessKeySecret && bucket && region && assets && publicDir)) {
@@ -63,24 +66,59 @@ if (!(accessKeyId && accessKeySecret && bucket && region && assets && publicDir)
   program.help();
 }
 
-upload({
-  accessKeyId,
-  accessKeySecret,
-  bucket,
-  region,
-  assets,
-}, publicDir).then(() => {
-  console.log(`child process exited with success`);
+const uploadProcess = (assetsDir) => {
+  upload({
+    accessKeyId,
+    accessKeySecret,
+    bucket,
+    region,
+    assets,
+  }, assetsDir).then(() => {
+    console.log(`child process exited with success`);
 
-  // fs.removeSync(tmpdir);
-}).catch((e) => {
-  // fs.removeSync(tmpdir);
+    fs.removeSync(tmpdir);
+  }).catch((e) => {
+    fs.removeSync(tmpdir);
 
-  throw e;
-});
+    throw e;
+  });
+}
+
+let buildProcess;
+
+if (isRepertory) {
+  buildProcess = spawn('bash', [
+    path.join(__dirname, '../sh/build.sh'),
+    tmpdir,
+    name,
+    target,
+    branch,
+    build,
+  ], { stdio: 'inherit', shell: true });
+
+  buildProcess.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+  });
+
+  buildProcess.on('error', (data) => {
+    console.log(`stderr: ${data}`);
+  });
+
+  buildProcess.on('close', (code) => {
+    if (code === 0) {
+      const assetsDir = `${tmpdir}/${name}/${publicDir}`
+      uploadProcess(assetsDir);
+    } else {
+      console.log('something wrong in buildProcess, code:', code);
+      fs.removeSync(tmpdir);
+    }
+  });
+} else {
+  uploadProcess(publicDir);
+}
 
 process.on('SIGINT', () => {
-  // fs.removeSync(tmpdir);
+  fs.removeSync(tmpdir);
 
   process.exit(0);
 });

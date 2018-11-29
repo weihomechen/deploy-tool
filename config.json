@@ -35,10 +35,34 @@
       "dist": "dist"
     },
     "iycb": {
-      "publicDir": "/Users/ifun/microants-projects/iyicaibao/build",
+      "isRepertory": true,
+      "target": "git@192.168.10.190:node/iyicaibao.git",
+      "branch": "master",
+      "oss": true,
+      "publicDir": "build",
       "bucket": "public-read-bkt-oss",
       "region": "oss-cn-hangzhou",
       "assets": "/app/h5/iyicaibao/client"
+    },
+    "iycb-dev": {
+      "isRepertory": true,
+      "target": "git@192.168.10.190:node/iyicaibao.git",
+      "branch": "dev",
+      "oss": true,
+      "publicDir": "build",
+      "bucket": "public-read-bkt-oss",
+      "region": "oss-cn-hangzhou",
+      "assets": "/app/h5/iyicaibao/client/dev"
+    },
+    "iycb-stable": {
+      "isRepertory": true,
+      "target": "git@192.168.10.190:node/iyicaibao.git",
+      "branch": "stable",
+      "oss": true,
+      "publicDir": "build",
+      "bucket": "public-read-bkt-oss",
+      "region": "oss-cn-hangzhou",
+      "assets": "/app/h5/iyicaibao/client/stable"
     }
   }
 }
