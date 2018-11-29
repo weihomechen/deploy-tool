@@ -81,51 +81,35 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
 
 ```js
 {
-  "defaultConfig": {              // 默认配置 default config
-    "web": "118.25.16.129",       // web server
-    "dir": "/var/proj/",          // web server target dir
-    "branch": "master",           // git branch
-    "build": "build",             // build script define by package.json 
-    "dist": "build",              // builded filename
-    "user": "root",               // web server ssh user
-    "type": "static"              // deploy type 静态项目 - static node项目 - node
+  "defaultConfig": {                          // 默认配置 default config
+    "web": "118.25.16.129",                   // web server
+    "dir": "/var/proj/",                      // web server target dir
+    "branch": "master",                       // git branch
+    "build": "build",                         // build script define by package.json 
+    "dist": "build",                          // builded filename
+    "user": "root",                           // web server ssh user
+    "type": "static"                          // deploy type 静态项目 - static node项目 - node
   },
-  "projConfigMap": {              // 具体项目的配置 proj config
-    "blog": {                     // 项目名
-      "target": "/Users/ifun/my-projects/blog" // 项目在本地的路径
+  "projConfigMap": {                          // 具体项目的配置 proj config
+    "blog": {                                 // 项目名
+      "target": "/project/path"               // 项目在本地的路径
     },
-    "blog-node": {
-      "target": "/Users/ifun/my-projects/blog-node",
-      "type": "node"
-    },
-    "vue-mail": {
-      "target": "/Users/ifun/my-projects/vue-mail-front",
-      "build": "build:prod",
-      "dist": "dist"
-    },
-    "react-admin": {
-      "target": "/Users/ifun/my-projects/antd-admin",
-      "dist": "dist"
-    }
-  }
-}
-```
-
-上传到OSS需要配置必要的信息或在使用时传入：
-
-```json
- "projrctName": {
+    // 上传到OSS需要配置必要的信息或在使用时传入
+    "projrctName": {
       "isRepertory": true,                    // 是否为远程仓库，默认false
       "isBuilded": true,                      // 是否已打包，默认false
       "target": "项目地址",                    // 项目地址，必须
       "branch": "master",                     // 默认master
       "publicDir": "build",                   // 要上传的文件目录, 必须
-      "bucket": "public-read-bkt-oss",        // OSS存储的bucket，必须
-      "region": "oss-cn-hangzhou",            // 必须
-      "assets": "/app/h5/iyicaibao/client",   // 指定OSS上存储路径，必须
+      "bucket": "your-oss-bucket",             // OSS存储的bucket，必须
+      "region": "your-oss-region",              // 必须
+      "assets": "/oss/dir/",                  // 指定OSS上存储路径，必须
       "build": "build"                        // 打包命令，如果isBuilded为false，则必须，会知悉 npm run <build>
     },
+  }
+}
 ```
+
 
 ### 命令行
 
