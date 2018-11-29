@@ -98,13 +98,13 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
     "projrctName": {
       "isRepertory": true,                    // 是否为远程仓库，默认false
       "isBuilded": true,                      // 是否已打包，默认false
-      "target": "项目地址",                    // 项目地址，必须
+      "target": "project/path",               // 项目地址，必须
       "branch": "master",                     // 默认master
       "publicDir": "build",                   // 要上传的文件目录, 必须
-      "bucket": "your-oss-bucket",             // OSS存储的bucket，必须
-      "region": "your-oss-region",              // 必须
+      "bucket": "your-oss-bucket",            // OSS存储的bucket，必须
+      "region": "your-oss-region",            // 必须
       "assets": "/oss/dir/",                  // 指定OSS上存储路径，必须
-      "build": "build"                        // 打包命令，如果isBuilded为false，则必须，会知悉 npm run <build>
+      "build": "build"                        // 打包命令，如果isBuilded为false，则必须，会执行 npm run <build>
     },
   }
 }
