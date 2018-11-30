@@ -96,7 +96,7 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
     },
     // 上传到OSS需要配置必要的信息或在使用时传入
     "projrctName": {
-      "": true,                    // 是否为远程仓库，默认false
+      "isRepertory": true,                    // 是否为远程仓库，默认false
       "isBuilded": true,                      // 是否已打包，默认false
       "target": "project/path",               // 项目地址，必须
       "branch": "master",                     // 默认master
