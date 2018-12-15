@@ -114,13 +114,15 @@ deploy.on('error', (data) => {
 
 deploy.on('close', (code) => {
   if (program.oss) {
+    const assetsDir = `${tmpdir}/${name}/${publicDir}`
+
     upload({
       accessKeyId,
       accessKeySecret,
       bucket,
       region,
       assets,
-    }, tmpdir, program.target.replace('/', '-'), program.publicDir).then(() => {
+    }, assetsDir).then(() => {
       console.log(`child process exited with code ${code}`);
 
       fs.removeSync(tmpdir);
