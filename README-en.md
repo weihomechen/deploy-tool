@@ -37,7 +37,7 @@ All parameters:
   .option('-u, --user [user]', 'required, web server ssh login user name, default: root')
   .option('-d, --dir [dir]', 'required, web server target dir')
   .option('-r, --repertoryType [repertoryType]', 'repertory type: local/remote, default: local')
-  .option('-t, --target [target]', 'required, project path, 本地项目即为文件路径, 远程仓库为仓库地址如git仓库地址')
+  .option('-t, --target [target]', 'required, project path, local: dir local path, remote repertory address, e.g. git repertory address')
   .option('-b, --branch [branch]', 'git branch, default: master')
   .option('-e, --type [type]', 'project type, static/node, default: static')
   .option('--isNeedBuild [isNeedBuild]', 'is need build, false -- no need, true -- need, default: true')
