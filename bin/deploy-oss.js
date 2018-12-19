@@ -8,6 +8,13 @@ const path = require('path');
 const program = require('commander');
 const mkdirp = require('mkdirp');
 const os = require('os');
+const chalk = require('chalk');
+
+const { log } = console;
+const error = chalk.hex('#f33535');
+const warning = chalk.keyword('orange');
+const info = chalk.cyan;
+const success = chalk.green;
 
 const {
   uniqueDirname,
@@ -15,8 +22,6 @@ const {
 const upload = require('../lib/upload');
 
 const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf8');
-const tmpdir = uniqueDirname(os.tmpdir(), 'deploy-');
-mkdirp.sync(tmpdir);
 
 const {
   defaultConfig,
@@ -29,7 +34,7 @@ program
   .option('-n, --name <name>', '项目名称')
   .option('-i, --accessKeyId <accessKeyId>', 'oss accessKeyId')
   .option('-s, --accessKeySecret <accessKeySecret>', 'oss accessKeySecret')
-  .option('-p [publicDir]', '要部署到OSS的文件目录')
+  .option('-p [publicDir]', '项目内要部署到OSS的文件目录')
   .option('-b [bucket]', 'oss bucket')
   .option('-r [region]', 'oss region')
   .option('-a [assets]', 'oss 静态资源目录')
@@ -48,10 +53,10 @@ const config = {
 };
 
 const {
-  isRepertory,
-  isBuilded,
+  repertoryType,
+  isNeedBuild,
   target,
-  branch = 'master',
+  branch,
   publicDir,
   accessKeyId,
   accessKeySecret,
@@ -62,7 +67,7 @@ const {
 } = config;
 
 if (!(target && build && accessKeyId && accessKeySecret && bucket && region && assets && publicDir)) {
-  console.log('使用oss需传入accessKeyId、accessKeySecret等参数');
+  log(error('使用oss需传入accessKeyId、accessKeySecret等参数'));
 
   program.help();
 }
@@ -75,21 +80,27 @@ const uploadProcess = (assetsDir) => {
     region,
     assets,
   }, assetsDir).then(() => {
-    console.log(`child process exited with success`);
+    log(success(`child process exited with success`));
 
     fs.removeSync(tmpdir);
+    log(info(`\n临时目录 ${tmpdir} 已删除\n`));
   }).catch((e) => {
+    log(error(`\n上传\n`));
     fs.removeSync(tmpdir);
+    log(info(`\n临时目录 ${tmpdir} 已删除\n`));
 
     throw e;
   });
 }
 
 let handleRepertory;
+const tmpdir = uniqueDirname(os.tmpdir(), 'deploy-');
+mkdirp.sync(tmpdir);
+log(info(`\n本次部署使用的临时目录：${tmpdir}\n`));
 
-if (isRepertory) {
+if (repertoryType === 'remote') {
   handleRepertory = spawn('bash', [
-    path.join(__dirname, `../sh/${isBuilded ? 'clone' : 'build'}.sh`),
+    path.join(__dirname, `../sh/${isNeedBuild === 'false' ? 'clone' : 'build'}.sh`),
     tmpdir,
     name,
     target,
@@ -97,11 +108,11 @@ if (isRepertory) {
   ], { stdio: 'inherit', shell: true });
 
   handleRepertory.on('data', (data) => {
-    console.log(`stdout: ${data}`);
+    log(info(`stdout: ${data}`));
   });
 
   handleRepertory.on('error', (data) => {
-    console.log(`stderr: ${data}`);
+    log(error(`stderr: ${data}`));
   });
 
   handleRepertory.on('close', (code) => {
@@ -109,16 +120,18 @@ if (isRepertory) {
       const assetsDir = `${tmpdir}/${name}/${publicDir}`
       uploadProcess(assetsDir);
     } else {
-      console.log('something wrong in handleRepertory, code:', code);
+      log(error('\nsomething wrong in handleRepertory, code:', code));
       fs.removeSync(tmpdir);
+      log(info(`\n临时目录 ${tmpdir} 已删除\n`));
     }
   });
 } else {
-  uploadProcess(publicDir);
+  uploadProcess(`${target}/${publicDir}`);
 }
 
 process.on('SIGINT', () => {
   fs.removeSync(tmpdir);
+  log(info(`\n临时目录 ${tmpdir} 已删除\n`));
 
   process.exit(0);
 });

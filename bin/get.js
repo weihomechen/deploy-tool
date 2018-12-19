@@ -3,6 +3,13 @@
 const fs = require('fs-extra');
 const path = require('path');
 const program = require('commander');
+const chalk = require('chalk');
+
+const { log } = console;
+const error = chalk.hex('#f33535');
+const warning = chalk.keyword('orange');
+const info = chalk.cyan;
+const success = chalk.green;
 
 const configFilePath = path.join(__dirname, '../config.json');
 const res = fs.readFileSync(configFilePath, 'utf8');
@@ -14,7 +21,7 @@ const {
 } = data;
 
 if (!defaultConfig) {
-  console.log('读取配置文件失败');
+  log(error('读取配置文件失败'));
   process.exit(1);
 }
 
@@ -33,11 +40,15 @@ if (!key && all === 'false') {
 }
 
 if (all === 'true') {
-  console.log(data);
+  log(info(data));
   process.exit(0);
 }
 
 const value = target === 'g' ? defaultConfig[key] : projConfigMap[target][key];
-console.log(value || '该配置项不存在');
+if (value) {
+  log(info(value))
+} else {
+  log(error('该配置项不存在'));
+}
 
 process.exit(0);

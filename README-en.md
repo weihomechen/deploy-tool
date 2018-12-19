@@ -1,6 +1,6 @@
 ## Description
 
-Deploy web application tool, currently supports deploying local projects to servers
+Deploy web application tool, supports deploying web application to servers
 
 ## Install
 
@@ -22,29 +22,27 @@ Prompt for ssh login password and press Enter to confirm
 
 ## Parameter Description
 
-All parameters： 
+All parameters:  
 
 ```sh
-# required
--n, --name <name>, project name
-
-# optional
--t, --target [target], project local path
--w, --web [web], web server ip, e.g:118.118.118.118
--d, --dir [dir], deploy to the server\'s directory
--b, --branch [branch], git branch, default `master`
--u, --user [user], web server user, default `root`
--e, --type [type], project type，static -- front-end project, node -- Node project，   default`static`
---build [build], production env build script，default`build`
---dist [dist], builded folder, default`build`
-
-# warning: testing
--o, --oss [oss], whether to upload static resources to oss
--i, --accessKeyId [accessKeyId], oss accessKeyId
--s, --accessKeySecret [accessKeySecret], oss accessKeySecret
---region [region], oss region
---assets [assets], local project static resource directory
---publicDir [publicDir], oss server static resource directory
+  .option('-n, --name <name>', 'required, application name')
+  .option('-w, --web [web]', 'required, web server ip address')
+  .option('-u, --user [user]', 'required, web server ssh login user name, default: root')
+  .option('-d, --dir [dir]', 'required, web server target dir')
+  .option('-r, --repertoryType [repertoryType]', 'repertory type: local/remote, default: local')
+  .option('-t, --target [target]', 'required, project path, 本地项目即为文件路径, 远程仓库为仓库地址如git仓库地址')
+  .option('-b, --branch [branch]', 'git branch, default: master')
+  .option('-e, --type [type]', 'project type, static/node, default: static')
+  .option('--isNeedBuild [isNeedBuild]', 'is need build, false -- no need, true -- need, default: true')
+  .option('--build [build]', "build script, if isNeedBuild === 'true', required, default: 'build', will excuet 'npm run ${build}'")
+  .option('--dist [dist]', 'proj dir where put builded files, default: dist')
+  .option('-o, --oss [oss]', 'is need upload assets to OSS, false/true, default: false')
+  .option('-i, --accessKeyId [accessKeyId]', 'oss accessKeyId')
+  .option('-s, --accessKeySecret [accessKeySecret]', 'oss accessKeySecret')
+  .option('--bucket [bucket]', 'oss bucket')
+  .option('--region [region]', 'oss region')
+  .option('--assets [assets]', 'oss dir, where put assets')
+  .option('--publicDir [publicDir]', 'proj dir where need to upload assets to OSS')
 ```
 
 ## Custom default configuration
@@ -72,31 +70,37 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
 
 ```js
 {
-  "defaultConfig": {              // default config
-    "web": "118.25.16.129",       // web server
-    "dir": "/var/proj/",          // web server target dir
-    "branch": "master",           // git branch
-    "build": "build",             // build script define by package.json 
-    "dist": "build",              // builded filename
-    "user": "root",               // web server ssh user
-    "type": "static"              // deploy type static -- front-end project, node -- Node project，
+  "defaultConfig": {                                     // global config
+    "web": "118.118.118.118",                            // web server ip address
+    "dir": "/var/proj/",                                 // web server dir
+    "user": "root",                                      // ssh login user name
+    "repertoryType": "local",                            // repertory type, local/remorte
+    "branch": "master",                                  // git branch
+    "type": "static",                                    // proj type static/node
+    "isNeedBuild": "true",                               // is need build, string, false/true
+    "build": "build",                                    // if isNeedBuild === 'true', npm run script
+    "dist": "build",                                     // proj dir where put builded files
+    "oss": "false"                                       // is need upload assets to OSS, string, false/true
   },
-  "projConfigMap": {                                  // project config
-    "blog": {                                         // project name
-      "target": "/Users/ifun/my-projects/blog"        // project local path
+  "projConfigMap": {                                      // project config
+    "blog": {                                             // project name
+      "repertoryType": "remote",                          // repertory type
+      "target": "https://github.com/weihomechen/blog.git" // project address
     },
     "blog-node": {
       "target": "/Users/ifun/my-projects/blog-node",
-      "type": "node"                                  // project type: node
+      "type": "node",
+      "isNeedBuild": "false"
     },
-    "vue-mail": {
-      "target": "/Users/ifun/my-projects/vue-mail-front",
-      "build": "build:prod",                          // project production env build script
-      "dist": "dist"                                  // project builded folder
-    },
-    "react-admin": {
-      "target": "/Users/ifun/my-projects/antd-admin",
-      "dist": "dist"
+    "ssr-starter": {
+      "repertoryType": "remote",
+      "target": "https://github.com/weihomechen/ssr-starter.git",
+      "type": "node",
+      "oss": "true",
+      "publicDir": "build",
+      "bucket": "rulifun",
+      "region": "oss-cn-hangzhou",
+      "assets": "/ssr-starter/client"
     }
   }
 }
@@ -107,18 +111,6 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
 #### Modify by command line
 
 ```sh
-# @param[target]: 
-# global config -- g
-# proj config -- proj name(e.g:blog)
-# default: g
-deploy-set -t [target] -k <key> -v <value>
-
-# Modify the global user configuration item
-deploy-set -k user -v yourname
-
-# Modify project blog configuration items
-deploy-set -t blog -k type -v node
-
 # @param[all]: get all configs 
 # true-yse, false-no, default: false
 deploy-get -a [all] -t [target] -k [key]
@@ -131,6 +123,18 @@ deploy-get -k web
 
 # Get the type configuration item of the project blog
 deploy-get -t blog -k type
+
+# @param[target]: 
+# global config -- g
+# proj config -- proj name(e.g:blog)
+# default: g
+deploy-set -t [target] -k <key> -v <value>
+
+# Modify the global user configuration item
+deploy-set -k user -v yourname
+
+# Modify project blog configuration items
+deploy-set -t blog -k type -v node
 
 ```
 
@@ -164,3 +168,4 @@ The following projects are deployed through this tool, and the online preview ad
 - [react-admin](https://github.com/weihomechen/react-admin)
 - [react-admin-node](https://github.com/weihomechen/react-admin-node)
 - [vue-mail](https://github.com/weihomechen/vue-mail-front)
+- [ssr-starter](https://github.com/weihomechen/ssr-starter)

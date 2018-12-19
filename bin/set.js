@@ -3,6 +3,13 @@
 const fs = require('fs-extra');
 const path = require('path');
 const program = require('commander');
+const chalk = require('chalk');
+
+const { log } = console;
+const error = chalk.hex('#f33535');
+const warning = chalk.keyword('orange');
+const info = chalk.cyan;
+const success = chalk.green;
 
 const configFilePath = path.join(__dirname, '../config.json');
 const res = fs.readFileSync(configFilePath, 'utf8');
@@ -14,7 +21,7 @@ const {
 } = data;
 
 if (!defaultConfig) {
-  console.log('读取配置文件失败');
+  log(error('读取配置文件失败'));
   process.exit(1);
 }
 
@@ -43,5 +50,5 @@ if (target === 'g') { // global
 const config = JSON.stringify(data);
 fs.writeFileSync(configFilePath, config);
 
-console.log(`set ${target === 'g' ? 'global' : target} config: ${key} with value: ${value} success`);
+log(success(`set ${target === 'g' ? 'global' : target} config: ${key} with value: ${value} success`));
 process.exit(0);

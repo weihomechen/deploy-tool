@@ -2,22 +2,28 @@
   "defaultConfig": {
     "web": "118.25.16.129",
     "dir": "/var/proj/",
+    "user": "root",
+    "repertoryType": "local",
     "branch": "master",
+    "type": "static",
+    "isNeedBuild": "true",
     "build": "build",
     "dist": "build",
-    "user": "root",
-    "type": "static"
+    "oss": "false"
   },
   "projConfigMap": {
     "blog": {
-      "target": "/Users/ifun/my-projects/blog"
+      "repertoryType": "remote",
+      "target": "https://github.com/weihomechen/blog.git"
     },
     "blog-node": {
       "target": "/Users/ifun/my-projects/blog-node",
-      "type": "node"
+      "type": "node",
+      "isNeedBuild": "false"
     },
     "vue-mail": {
       "target": "/Users/ifun/my-projects/vue-mail-front",
+      "isNeedBuild": "false",
       "build": "build:prod",
       "dist": "dist"
     },
@@ -27,48 +33,55 @@
     },
     "react-admin-node": {
       "target": "/Users/ifun/my-projects/react-admin-node",
-      "type": "node"
+      "type": "node",
+      "isNeedBuild": "false"
     },
     "vue-blog": {
       "target": "/Users/ifun/my-projects/vue-blog",
-      "build": "build",
       "dist": "dist"
     },
+    "ssr-starter": {
+      "repertoryType": "remote",
+      "target": "https://github.com/weihomechen/ssr-starter.git",
+      "type": "node",
+      "oss": "true",
+      "publicDir": "build",
+      "bucket": "rulifun",
+      "region": "oss-cn-hangzhou",
+      "assets": "/ssr-starter/client"
+    },
     "iycb": {
-      "isRepertory": true,
-      "isBuilded": true,
-      "target": "git@192.168.10.190:node/iyicaibao.git",
-      "branch": "master",
-      "oss": true,
-      "publicDir": "build",
-      "bucket": "public-read-bkt-oss",
-      "region": "oss-cn-hangzhou",
-      "assets": "/app/h5/iyicaibao/client",
-      "build": "build"
-    },
-    "iycb-dev": {
-      "isRepertory": true,
-      "isBuilded": true,
-      "target": "git@192.168.10.190:node/iyicaibao.git",
-      "branch": "dev",
-      "oss": true,
-      "publicDir": "build",
-      "bucket": "public-read-bkt-oss",
-      "region": "oss-cn-hangzhou",
-      "assets": "/app/h5/iyicaibao/client/dev",
-      "build": "build"
-    },
-    "iycb-stable": {
-      "isRepertory": true,
-      "isBuilded": true,
+      "repertoryType": "remote",
       "target": "git@192.168.10.190:node/iyicaibao.git",
       "branch": "stable",
-      "oss": true,
+      "isNeedBuild": "false",
+      "oss": "true",
       "publicDir": "build",
       "bucket": "public-read-bkt-oss",
       "region": "oss-cn-hangzhou",
-      "assets": "/app/h5/iyicaibao/client/stable",
-      "build": "build"
+      "assets": "/app/h5/iyicaibao/client"
+    },
+    "iycb-dev": {
+      "repertoryType": "remote",
+      "target": "git@192.168.10.190:node/iyicaibao.git",
+      "branch": "dev",
+      "isNeedBuild": "false",
+      "oss": "true",
+      "publicDir": "build",
+      "bucket": "public-read-bkt-oss",
+      "region": "oss-cn-hangzhou",
+      "assets": "/app/h5/iyicaibao/client/dev"
+    },
+    "iycb-stable": {
+      "repertoryType": "remote",
+      "target": "git@192.168.10.190:node/iyicaibao.git",
+      "branch": "stable",
+      "isNeedBuild": "false",
+      "oss": "true",
+      "publicDir": "build",
+      "bucket": "public-read-bkt-oss",
+      "region": "oss-cn-hangzhou",
+      "assets": "/app/h5/iyicaibao/client/stable"
     }
   }
 }
