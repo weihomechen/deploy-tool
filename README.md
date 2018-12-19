@@ -2,6 +2,13 @@
 
 部署应用工具，支持部署Web项目到服务器
 
+## 功能特性
+
+- ✔︎ 支持本地或远程项目，远程项目需设置仓库地址
+- ✔︎ 支持前端或Node项目，Node项目部署后运行
+- ✔︎ 支持上传静态资源到OSS服务器
+- ✔︎ 支持设置默认的配置，一次配置多次使用，配置可扩展
+
 [English Document](https://github.com/weihomechen/deploy-tool/blob/master/README-en.md)
 
 ## 安装

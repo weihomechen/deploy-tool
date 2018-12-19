@@ -2,6 +2,13 @@
 
 Deploy web application tool, supports deploying web application to servers
 
+## Features
+
+- ✔︎ Local or remote projcet supported
+- ✔︎ Front or Node application supported, Node application will run after deploy
+- ✔︎ Upload assets to OSS supported
+- ✔︎ Extends default global or project config supported
+
 ## Install
 
 ```sh

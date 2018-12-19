@@ -1,6 +1,6 @@
 {
   "name": "@ifun/deploy",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "auth": "weihome",
   "description": "deploy tool 项目部署命令行工具",
   "main": "./bin/deploy.js",
