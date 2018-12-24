@@ -1,14 +1,11 @@
 {
   "name": "@ifun/deploy",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "auth": "weihome",
   "description": "deploy tool 项目部署命令行工具",
   "main": "./bin/deploy.js",
   "bin": {
-    "deploy": "./bin/deploy.js",
-    "deploy-set": "./bin/set.js",
-    "deploy-get": "./bin/get.js",
-    "deploy-oss": "./bin/deploy-oss.js"
+    "deploy": "./bin/deploy.js"
   },
   "scripts": {
     "deploy": "node ./bin/deploy.js",
@@ -42,5 +39,8 @@
   "bugs": {
     "url": "https://github.com/weihomechen/deploy-tool/issues"
   },
-  "homepage": "https://github.com/weihomechen/deploy-tool#readme"
+  "homepage": "https://github.com/weihomechen/deploy-tool#readme",
+  "engines": {
+    "node": ">=8"
+  }
 }

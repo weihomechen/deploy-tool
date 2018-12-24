@@ -15,7 +15,11 @@
 
 dname=$(dirname "$0")
 
-read -s -p 'ssh Login Pwd:' pwd
+read -s -p 'ssh Login Password:' pwd
+
+echo
+
+echo 'Password get√'
 
 echo
 

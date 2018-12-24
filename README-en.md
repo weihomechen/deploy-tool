@@ -18,11 +18,30 @@ npm i @ifun/deploy -g
 ## Use
 
 ```sh
-# deploy project
-deploy -n <name>
+# deploy app
+deploy app <name>
 
 # e.g
-deploy -n blog
+deploy app blog
+
+# get config
+deploy config get [options]
+
+# set config
+deploy config set [options]
+
+# upload assets to OSS only
+deploy oss <app-name> [options]
+
+# for help
+deploy -h
+
+# for more detail
+deploy <command> -h
+
+# e.g
+deploy app -h
+
 ```
 
 Prompt for ssh login password and press Enter to confirm
@@ -32,7 +51,7 @@ Prompt for ssh login password and press Enter to confirm
 All parameters:  
 
 ```sh
-  .option('-n, --name <name>', 'required, application name')
+  .command('app <name>')
   .option('-w, --web [web]', 'required, web server ip address')
   .option('-u, --user [user]', 'required, web server ssh login user name, default: root')
   .option('-d, --dir [dir]', 'required, web server target dir')
@@ -50,6 +69,20 @@ All parameters:
   .option('--region [region]', 'oss region')
   .option('--assets [assets]', 'oss dir, where put assets')
   .option('--publicDir [publicDir]', 'proj dir where need to upload assets to OSS')
+
+  .command('config <action>')
+  .option('-a, --all', 'get all config')
+  .option('-t, --target [target]', 'app name, default: g -- global')
+  .option('-k, --key [key]', 'config key which will be readed')
+  .option('-v, --value <value>', 'config value when be written')
+
+  .command('oss <name>')
+  .option('-i, --accessKeyId <accessKeyId>', 'oss accessKeyId')
+  .option('-s, --accessKeySecret <accessKeySecret>', 'oss accessKeySecret')
+  .option('-p [publicDir]', "project's dir where will be uploaded")
+  .option('-b [bucket]', 'oss bucket')
+  .option('-r [region]', 'oss region')
+  .option('-a [assets]', 'oss server dir to store assets')
 ```
 
 ## Custom default configuration
@@ -119,29 +152,28 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
 
 ```sh
 # @param[all]: get all configs 
-# true-yse, false-no, default: false
-deploy-get -a [all] -t [target] -k [key]
+deploy config get -a [all] -t [target] -k [key]
 
 # Get all configs
-deploy-get -a true
+deploy config get -a
 
 # Get the global web configuration item
-deploy-get -k web
+deploy config get -k web
 
 # Get the type configuration item of the project blog
-deploy-get -t blog -k type
+deploy config get -t blog -k type
 
 # @param[target]: 
 # global config -- g
 # proj config -- proj name(e.g:blog)
 # default: g
-deploy-set -t [target] -k <key> -v <value>
+deploy config set -t [target] -k <key> -v <value>
 
 # Modify the global user configuration item
-deploy-set -k user -v yourname
+deploy config set -k user -v yourname
 
 # Modify project blog configuration items
-deploy-set -t blog -k type -v node
+deploy config set -t blog -k type -v node
 
 ```
 
@@ -151,7 +183,7 @@ Temporarily entered parameters have the highest privilege and override the defau
 
 ```sh
 # The `web` parameter passed through the command line will eventually be used.
-deploy -n blog-node -w 88.88.88.88 
+deploy app blog-node -w 88.88.88.88 
 ```
 
 ## Agreement

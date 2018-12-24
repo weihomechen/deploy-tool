@@ -31,7 +31,7 @@ git checkout $3
 
 if [ "${12}" == 'true' ]
 then 
-  cnpm install --production
+  npm install --production
   export NODE_ENV=production && npm run $9
 fi
 

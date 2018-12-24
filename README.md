@@ -21,21 +21,40 @@ npm i @ifun/deploy -g
 
 ```sh
 # 部署项目
-deploy -n <name>
+deploy app <name>
 
 # 示例
-deploy -n blog
+deploy app blog
+
+# 获取配置
+deploy config get [options]
+
+# 设置配置
+deploy config set [options]
+
+# 单纯上传到oss
+deploy oss <app-name> [options]
+
+# for help
+deploy -h
+
+# for more detail
+deploy <command> -h
+
+# e.g
+deploy app -h
+
 ```
 
-提示输入ssh登录密码，按回车确认
+如需输入ssh登录密码，输入后按回车确认
 
-## 单纯上传静态资源到OSS：deploy-oss
+## 单纯上传静态资源到OSS：deploy oss
 
 支持从本地或仓库上传静态资源到OSS，如果是本地项目，则直接上传到oss服务器指定目录。如果是远程仓库，会先`git clone`到本地，如果需要打包，则执行传入的打包命令，然后再上传。
 
 ```sh
 # 示例，只单纯上传静态资源到OSS
-deploy-oss -n <name> -i <accessKeyId> -s <accessKeySecret>
+deploy oss <app-name> -i <accessKeyId> -s <accessKeySecret>
 ```
 
 ## 参数说明
@@ -43,7 +62,7 @@ deploy-oss -n <name> -i <accessKeyId> -s <accessKeySecret>
 完整参数： 
 
 ```sh
-  .option('-n, --name <name>', '必须，项目名称')
+  .command('app <name>')
   .option('-w, --web [web]', '必须，web服务器')
   .option('-u, --user [user]', '必须，web服务器用户名')
   .option('-d, --dir [dir]', '必须，要部署到web服务器的目录')
@@ -61,6 +80,20 @@ deploy-oss -n <name> -i <accessKeyId> -s <accessKeySecret>
   .option('--region [region]', 'oss region')
   .option('--assets [assets]', 'oss服务器目录，用来存放要上传的静态资源')
   .option('--publicDir [publicDir]', '该项目要上传的静态资源目录')
+
+.command('config <action>')
+  .option('-a, --all', '是否读取全部配置')
+  .option('-t, --target [target]', 'g-全局配置 项目名(e.g:blog)-项目配置 默认 g-全局')
+  .option('-k, --key [key]', '要读取的配置项，不读取全部时必填 e.g. branch')
+  .option('-v, --value <value>', '必须，设置配置项的值')
+
+ .command('oss <name>')
+  .option('-i, --accessKeyId <accessKeyId>', 'oss accessKeyId')
+  .option('-s, --accessKeySecret <accessKeySecret>', 'oss accessKeySecret')
+  .option('-p [publicDir]', '项目内要部署到OSS的文件目录')
+  .option('-b [bucket]', 'oss bucket')
+  .option('-r [region]', 'oss region')
+  .option('-a [assets]', 'oss 静态资源目录')
 ```
 
 ## 自定义默认配置
@@ -128,27 +161,29 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
 
 #### 通过命令修改
 
+##### deploy config <action> [options]
+
 ```sh
 # @param all 是否获取所有配置 true-是 false-否 默认：false
-deploy-get -a [all] -t [target] -k [key]
+deploy config get -a [all] -t [target] -k [key]
 
 # e.g. 获取所有配置项
-deploy-get -a true
+deploy config get -a
 
 # e.g. 获取全局的web配置项
-deploy-get -k web
+deploy config get -k web
 
 # e.g. 获取项目blog的type配置项
-deploy-get -t blog -k type
+deploy config get -t blog -k type
 
 # @param target 全局配置-g 项目配置-项目名(e.g:blog) 默认:g
-deploy-set -t [target] -k <key> -v <value>
+deploy config set -t [target] -k <key> -v <value>
 
 # e.g. 修改全局的user配置项
-deploy-set -k user -v yourname
+deploy config set -k user -v yourname
 
 # e.g. 修改项目配置项
-deploy-set -t blog -k type -v node
+deploy config set -t blog -k type -v node
 
 ```
 
@@ -158,7 +193,7 @@ deploy-set -t blog -k type -v node
 
 ```sh
 # 通过命令行传递的`web`的参数最终会被使用
-deploy -n blog-node -w 88.88.88.88 
+deploy app blog-node -w 88.88.88.88 
 ```
 
 ## 约定

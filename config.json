@@ -9,12 +9,14 @@
     "isNeedBuild": "true",
     "build": "build",
     "dist": "build",
-    "oss": "false"
+    "oss": "false",
+    "sb": "123"
   },
   "projConfigMap": {
     "blog": {
       "repertoryType": "remote",
-      "target": "https://github.com/weihomechen/blog.git"
+      "target": "https://github.com/weihomechen/blog.git",
+      "sb": "2333"
     },
     "blog-node": {
       "target": "/Users/ifun/my-projects/blog-node",

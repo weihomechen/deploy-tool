@@ -15,4 +15,4 @@ git fetch origin $4
 
 git checkout $4
 
-cnpm install --production && npm run $5
+npm install --production && npm run $5
