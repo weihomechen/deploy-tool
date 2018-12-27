@@ -1,6 +1,6 @@
 {
   "name": "@ifun/deploy",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "auth": "weihome",
   "description": "deploy tool 项目部署命令行工具",
   "main": "./bin/deploy.js",
@@ -29,12 +29,15 @@
     "chalk": "^2.4.1",
     "co": "^4.6.0",
     "commander": "^2.14.1",
-    "fs-extra": "^5.0.0"
+    "fs-extra": "^5.0.0",
+    "inquirer": "^6.2.1"
   },
   "directories": {
     "lib": "lib"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^5.11.0"
+  },
   "author": "weihome",
   "bugs": {
     "url": "https://github.com/weihomechen/deploy-tool/issues"

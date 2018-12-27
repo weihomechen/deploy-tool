@@ -1,13 +1,24 @@
 #!/usr/bin/env node
 
+const fs = require('fs-extra');
+const path = require('path');
 const program = require('commander');
 const chalk = require('chalk');
 const semver = require('semver');
+const inquirer = require('inquirer');
 
 const requiredVersion = require('../package.json').engines.node;
 
 const { log } = console;
 const error = chalk.hex('#f33535');
+// const { logStringify } = require('../lib/util');
+
+const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf8');
+const config = JSON.parse(data);
+const {
+  defaultConfig,
+  projConfigMap
+} = config;
 
 function checkNodeVersion(wanted, id) {
   if (!semver.satisfies(process.version, wanted)) {
@@ -20,6 +31,96 @@ function checkNodeVersion(wanted, id) {
 }
 
 checkNodeVersion(requiredVersion, '@ifun/deploy');
+
+const checkGlobalConfig = () => {
+  const globalConfigKeys = ['web', 'dir', 'user', 'repertoryType', 'branch', 'type', 'isNeedBuild', 'build', 'dist', 'oss'];
+  const undefinedKeys = globalConfigKeys.filter(key => defaultConfig[key] === undefined) || [];
+  let i = 0;
+  let newGlobalConfig = {};
+
+  return new Promise((resolve, reject) => {
+    const getAnswer = (i) => {
+      if (i >= undefinedKeys.length) {
+        resolve(newGlobalConfig);
+        return;
+      }
+
+      const key = undefinedKeys[i];
+      inquirer.prompt([{
+        type: 'input',
+        name: key,
+        message: `global config ${key} is undefined, please input the value`,
+      }]).then(answer => {
+        if (answer[key] !== undefined) {
+          newGlobalConfig[key] = String(answer[key]);
+        }
+        i++;
+        getAnswer(i);
+      })
+    };
+
+    getAnswer(0);
+  });
+};
+
+const checkProjectConfig = (name) => {
+  const projectConfig = projConfigMap[name] || { name };
+  const projectConfigKeys = [
+    // web server
+    'web',
+    'dir',
+    'user',
+    // repertory info
+    'repertoryType',
+    'target',
+    'branch',
+    'type',
+    // build config
+    'isNeedBuild',
+    'build',
+    'dist',
+    // oss config
+    'oss',
+  ];
+
+  const undefinedKeys = projectConfigKeys.filter(key => projectConfig[key] === undefined) || [];
+  let i = 0;
+  let newProjectConfig = {};
+
+  return new Promise((resolve, reject) => {
+    const getAnswer = (i) => {
+      if (i >= undefinedKeys.length - 1) {
+        resolve(newProjectConfig);
+        return;
+      }
+
+      const key = undefinedKeys[i];
+      const globalValue = defaultConfig[key] || '';
+      const validater = (input) => {
+        if (key === 'target') {
+          if (!input) {
+            log(error(`config ${key} is required`));
+            return false;
+          }
+        }
+        return true;
+      };
+
+      inquirer.prompt([{
+        type: 'input',
+        name: key,
+        message: `config ${key} is undefined, please input the value ${globalValue ? `or press enter to use global config(${globalValue})` : ''}`,
+        validate: validater,
+      }]).then(answer => {
+        newProjectConfig[key] = String(answer[key] || globalValue);
+        i++;
+        getAnswer(i);
+      })
+    };
+
+    getAnswer(0);
+  });
+};
 
 const {
   cleanArgs,
@@ -60,11 +161,43 @@ program
   .option('--region [region]', 'oss region')
   .option('--assets [assets]', 'oss服务器目录，用来存放要上传的静态资源')
   .option('--publicDir [publicDir]', '该项目要上传的静态资源目录')
-  .action((name, cmd) => {
-    const options = cleanArgs(cmd);
-    options.name = name;
+  .action(async (name, cmd) => {
+    const newGlobalConfig = await checkGlobalConfig();
 
-    require(`../lib/deploy`)(options);
+    if (Object.keys(newGlobalConfig).length) {
+      const options = {
+        type: 'multiple',
+      };
+      await require('../lib/set')(options, newGlobalConfig);
+    }
+
+    if (projConfigMap[name]) {
+      const options = cleanArgs(cmd);
+      options.name = name;
+
+      require(`../lib/deploy`)(options);
+    } else {
+      inquirer.prompt([{
+        type: 'confirm',
+        name: 'value',
+        message: `project ${name} hasn't configurations yet, should create this project in config.json?`,
+        default: true,
+      }]).then(async ({ value }) => {
+        const isNeedWriteConfig = value;
+        const projectConfig = await checkProjectConfig();
+        projectConfig.name = name;
+        if (isNeedWriteConfig) {
+          const options = {
+            target: name,
+            type: 'multiple',
+          };
+          await require('../lib/set')(options, projectConfig);
+          require(`../lib/deploy`)(projectConfig);
+        } else {
+          require(`../lib/deploy`)(projectConfig);
+        }
+      })
+    }
   });
 
 program
