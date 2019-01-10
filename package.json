@@ -9,8 +9,6 @@
   },
   "scripts": {
     "deploy": "node ./bin/deploy.js",
-    "deploy-set": "node ./bin/set.js",
-    "deploy-get": "node ./bin/get.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -36,7 +34,10 @@
     "lib": "lib"
   },
   "devDependencies": {
-    "eslint": "^5.11.0"
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.11.1",
+    "eslint-plugin-node": "^6.0.1",
+    "semver": "^5.5.0"
   },
   "author": "weihome",
   "bugs": {

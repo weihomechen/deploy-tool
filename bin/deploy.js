@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 
+/**
+ * 命令行 deploy [action]
+ * @param action: config | app | oss
+ * config: get/set configurations
+ * app: deploy app, get/set configurations with input
+ * oss: upload to oss
+ */
+
 const fs = require('fs-extra');
 const path = require('path');
 const program = require('commander');
@@ -11,10 +19,9 @@ const requiredVersion = require('../package.json').engines.node;
 
 const { log } = console;
 const error = chalk.hex('#f33535');
-// const { logStringify } = require('../lib/util');
+// const { logStringify } = require('../lib/util'); 
 
-const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf8');
-const config = JSON.parse(data);
+const config = fs.readJsonSync(path.join(__dirname, '../config.json'));
 const {
   defaultConfig,
   projConfigMap
@@ -35,7 +42,6 @@ checkNodeVersion(requiredVersion, '@ifun/deploy');
 const checkGlobalConfig = () => {
   const globalConfigKeys = ['web', 'dir', 'user', 'repertoryType', 'branch', 'type', 'isNeedBuild', 'build', 'dist', 'oss'];
   const undefinedKeys = globalConfigKeys.filter(key => defaultConfig[key] === undefined) || [];
-  let i = 0;
   let newGlobalConfig = {};
 
   return new Promise((resolve, reject) => {
@@ -56,6 +62,9 @@ const checkGlobalConfig = () => {
         }
         i++;
         getAnswer(i);
+      }).catch((e) => {
+        log(error(e));
+        reject(e);
       })
     };
 
@@ -84,7 +93,6 @@ const checkProjectConfig = (name) => {
   ];
 
   const undefinedKeys = projectConfigKeys.filter(key => projectConfig[key] === undefined) || [];
-  let i = 0;
   let newProjectConfig = {};
 
   return new Promise((resolve, reject) => {
@@ -115,7 +123,7 @@ const checkProjectConfig = (name) => {
         newProjectConfig[key] = String(answer[key] || globalValue);
         i++;
         getAnswer(i);
-      })
+      }).catch(reject);
     };
 
     getAnswer(0);
@@ -164,26 +172,34 @@ program
   .action(async (name, cmd) => {
     const newGlobalConfig = await checkGlobalConfig();
 
+    // 如果设置了全局配置
     if (Object.keys(newGlobalConfig).length) {
       const options = {
         type: 'multiple',
       };
+
+      // 写入文件
       await require('../lib/set')(options, newGlobalConfig);
     }
 
+    // 如果项目已有配置
     if (projConfigMap[name]) {
       const options = cleanArgs(cmd);
       options.name = name;
 
       require(`../lib/deploy`)(options);
     } else {
+      // 新的项目（还未配置）
       inquirer.prompt([{
         type: 'confirm',
         name: 'value',
         message: `project ${name} hasn't configurations yet, should create this project in config.json?`,
         default: true,
       }]).then(async ({ value }) => {
+        // 是否将配置信息写进文件
         const isNeedWriteConfig = value;
+
+        // 获取用户输入的配置
         const projectConfig = await checkProjectConfig();
         projectConfig.name = name;
         if (isNeedWriteConfig) {
