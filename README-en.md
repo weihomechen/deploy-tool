@@ -152,28 +152,31 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
 
 ```sh
 # @param[all]: get all configs 
-deploy config get -a [all] -t [target] -k [key]
+deploy config get <target> [key] -a [all]
 
 # Get all configs
 deploy config get -a
 
 # Get the global web configuration item
-deploy config get -k web
+deploy config get global web
+
+# Get project blog's configurations
+deploy config get blog
 
 # Get the type configuration item of the project blog
-deploy config get -t blog -k type
+deploy config get blog type
 
 # @param[target]: 
 # global config -- g
 # proj config -- proj name(e.g:blog)
 # default: g
-deploy config set -t [target] -k <key> -v <value>
+deploy config set <target> <key> <value>
 
 # Modify the global user configuration item
-deploy config set -k user -v yourname
+deploy config set global user yourname
 
 # Modify project blog configuration items
-deploy config set -t blog -k type -v node
+deploy config set blog type node
 
 ```
 

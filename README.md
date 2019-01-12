@@ -165,25 +165,28 @@ vim /usr/local/lib/node_modules/@ifun/deploy/config.json
 
 ```sh
 # @param all 是否获取所有配置 true-是 false-否 默认：false
-deploy config get -a [all] -t [target] -k [key]
+deploy config get <target> [key] -a [all] 
 
 # e.g. 获取所有配置项
 deploy config get -a
 
 # e.g. 获取全局的web配置项
-deploy config get -k web
+deploy config get global web
+
+# e.g. 获取项目blog配置项
+deploy config get blog
 
 # e.g. 获取项目blog的type配置项
-deploy config get -t blog -k type
+deploy config get blog type
 
 # @param target 全局配置-g 项目配置-项目名(e.g:blog) 默认:g
-deploy config set -t [target] -k <key> -v <value>
+deploy config set <target> <key> <value>
 
 # e.g. 修改全局的user配置项
-deploy config set -k user -v yourname
+deploy config set global user yourname
 
 # e.g. 修改项目配置项
-deploy config set -t blog -k type -v node
+deploy config set blog type node
 
 ```
 

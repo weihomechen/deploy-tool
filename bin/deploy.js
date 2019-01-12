@@ -117,7 +117,7 @@ const checkProjectConfig = (name) => {
       inquirer.prompt([{
         type: 'input',
         name: key,
-        message: `config ${key} is undefined, please input the value ${globalValue ? `or press enter to use global config(${globalValue})` : ''}`,
+        message: `${key} is undefined, please input the value ${globalValue ? `or use global value(${globalValue})` : ''}`,
         validate: validater,
       }]).then(answer => {
         newProjectConfig[key] = String(answer[key] || globalValue);
@@ -139,13 +139,18 @@ program
   .usage('<action> [options]');
 
 program
-  .command('config <action>')
+  .command('config <action> [target] [key] [value]')
   .option('-a, --all', '是否读取全部配置')
-  .option('-t, --target [target]', 'g-全局配置 项目名(e.g:blog)-项目配置 默认 g-全局')
-  .option('-k, --key [key]', '要读取的配置项，不读取全部时必填 e.g. branch')
-  .option('-v, --value <value>', '必须，设置配置项的值')
-  .action((action, cmd) => {
-    const options = cleanArgs(cmd);
+  .action((action, target, key, value, cmd) => {
+
+    let options = cleanArgs(cmd);
+
+    options = {
+      ...options,
+      target,
+      key,
+      value,
+    }
 
     require(`../lib/${action}`)(options);
   });
