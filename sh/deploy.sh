@@ -10,7 +10,7 @@
 # $9 build                打包命令
 # ${10} dist              打包后的文件夹
 # ${11} repertoryType     仓库类型
-# ${12} isNeedBuild         是否已打包
+# ${12} isNeedBuild       是否已打包
 # ${13} tmpdir            临时目录
 
 if [ ${11} == 'remote' ]
@@ -31,7 +31,7 @@ git checkout $3
 
 if [ "${12}" == 'true' ]
 then 
-  npm install --production
+  npm install
   export NODE_ENV=production && npm run $9
 fi
 
