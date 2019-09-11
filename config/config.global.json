@@ -1,0 +1,10 @@
+{
+  "web": "118.25.16.129",
+  "dir": "/var/proj/",
+  "user": "root",
+  "type": "0",
+  "isNeedBuild": true,
+  "buildScript": "build",
+  "distDir": "dist",
+  "npmRegistry": "http://registry.npmjs.org/"
+}

@@ -1,18 +1,8 @@
 #! /bin/bash
-# $1  tmpdir              临时目录
-# $2  name                项目名
-# $3  target              远程仓库地址
-# $4  branch              分支
-# $5  build               打包命令
+# $1  projectDir          项目目录
+# $2  buildScript         打包命令
+# $3  npmRegistry         npm镜像源      
 
 cd $1
 
-git clone $3 $2
-
-cd $2
-
-git fetch origin $4 
-
-git checkout $4
-
-npm install --production && npm run $5
+npm install --production --npmRegistry=${3} && npm run $2

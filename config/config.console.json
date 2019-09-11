@@ -1,0 +1,8 @@
+{
+  "color": {
+    "error": "#f33535",
+    "info": "#00adb5",
+    "success": "#00bdaa",
+    "warn": "#fffe9f"
+  }
+}

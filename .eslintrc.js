@@ -1,20 +1,16 @@
 module.exports = {
+  extends: "standard",
   parser: "babel-eslint",
-  plugins: [
-    "node"
-  ],
-  parserOptions: {
-    ecmaVersion: 2017
-  },
   env: {
-    jest: true,
-    es6: true,
     node: true,
+    es6: true,
+  },
+  parserOptions: {
+    ecmaVersion: 7,
+    sourceType: "module",
   },
   rules: {
-    indent: ["error", 2, {
-      "MemberExpression": "off"
-    }],
-    'no-unused-vars': ["error"],
+    "comma-dangle": ["error", "always"],
+    "semi-style": ["error", "never"],
   }
 }
