@@ -10,7 +10,20 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-    "comma-dangle": ["error", "always"],
-    "semi-style": ["error", "never"],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "ignore"
+      }
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "space-before-function-paren": 0
   }
 }

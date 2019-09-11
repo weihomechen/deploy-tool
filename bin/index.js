@@ -82,7 +82,7 @@ program
 
     paramChecker(options)
 
-    require(`../lib/deploy`)(options)
+    require('../lib/deploy')(options)
   })
 
 // 单独执行上传资源到OSS
@@ -110,12 +110,12 @@ program
 
     paramChecker(options)
 
-    require(`../lib/deploy-oss`)(options)
+    require('../lib/deploy-oss')(options)
   })
 
 // add some useful info on help
 program.on('--help', () => {
-  info(`\n Run ${chalk.cyan(`deploy <command> --help`)} for detailed usage of given command.\n`)
+  info(`\n Run ${chalk.cyan('deploy <command> --help')} for detailed usage of given command.\n`)
 })
 
 program.commands.forEach(c => c.on('--help', () => console.log()))

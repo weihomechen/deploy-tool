@@ -1,6 +1,6 @@
 {
   "name": "@ifun/deploy",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "auth": "weihome",
   "description": "deploy tool 项目部署命令行工具",
   "main": "./bin/index.js",
@@ -10,19 +10,7 @@
   "scripts": {
     "deploy": "node ./bin/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier": "eslint --fix"
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "prettier --tab-width 2 --write",
-      "eslint --fix",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "eslint": "eslint --ext .js bin lib"
   },
   "repository": {
     "type": "git",
@@ -56,8 +44,6 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "husky": "^3.0.5",
-    "prettier": "^1.18.2",
     "semver": "^6.3.0"
   },
   "author": "weihome",
